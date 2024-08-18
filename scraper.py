@@ -9,8 +9,8 @@ import time
 import pandas as pd
 
 URL = "https://www.google.com/maps"
-service = "catering"
-location = "stoke-on-trent"
+service = "YOUR SERVICE" # e.g. catering, events, etc.
+location = "YOUR LOCATION" # e.g. London, Germany, etc.
 
 driver = webdriver.Chrome()
 driver.maximize_window()
@@ -25,11 +25,11 @@ except NoSuchElementException:
 
 # Search for results
 input_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="searchboxinput"]')))
-input_field.send_keys(service + ' ' + location)
+input_field.send_keys(service.lower() + ' ' + location.lower())
 input_field.send_keys(Keys.ENTER)
 
 # Wait for the sidebar to load
-divSideBar = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, f"div[aria-label='Results for {service + ' ' + location}']")))
+divSideBar = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, f"div[aria-label='Results for {service.lower() + ' ' + location.lower()}']")))
 
 # Scroll through the results
 previous_scroll_height = driver.execute_script("return arguments[0].scrollHeight", divSideBar)
