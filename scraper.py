@@ -29,7 +29,7 @@ input_field.send_keys(service.lower() + ' ' + location.lower())
 input_field.send_keys(Keys.ENTER)
 
 # Wait for the sidebar to load
-divSideBar = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, f"div[aria-label='Results for {service.lower() + ' ' + location.lower()}']")))
+divSideBar = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, f"div[aria-label*='{service.lower()} {location.lower()}']")))
 
 # Scroll through the results
 previous_scroll_height = driver.execute_script("return arguments[0].scrollHeight", divSideBar)
