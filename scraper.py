@@ -100,7 +100,7 @@ for box in boxes:
         'Number of Reviews': number_of_reviews,
         'Phone Number': phone_number,
         'Website': website,
-        'Email:': ' ',
+        'Email': ' ',
     })
 
 # Create a DataFrame and save to Excel
