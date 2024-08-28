@@ -5,6 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.options import Options
 import time
 import pandas as pd
 
@@ -12,8 +13,10 @@ URL = "https://www.google.com/maps"
 service = "YOUR SERVICE" # e.g. catering, events, etc.
 location = "YOUR LOCATION" # e.g. London, Germany, etc.
 
-driver = webdriver.Chrome()
-driver.maximize_window()
+options = Options()
+options.add_argument('--headless=new')
+
+driver = webdriver.Chrome(options=options)
 driver.get(URL)
 
 # Accept cookies
@@ -102,6 +105,6 @@ for box in boxes:
 
 # Create a DataFrame and save to Excel
 df = pd.DataFrame(data)
-df.to_excel(f'results/{location}_{service}.xlsx', index=False)
+df.to_excel(f'{location}_{service}.xlsx', index=False)
 
 print(f"Data has been saved to {location}_{service}.xlsx")
