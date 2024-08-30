@@ -32,10 +32,6 @@ This repository contains two Python scripts designed to scrape business data fro
     pip install -r requirements.txt
     ```
 
-3. **Download ChromeDriver:**
-
-    Download the appropriate version of ChromeDriver for your version of Google Chrome from [ChromeDriver downloads](https://sites.google.com/a/chromium.org/chromedriver/downloads) and place it in a directory that is part of your system's PATH, or specify the path directly in the scripts.
-
 ## Configuration
 
 1. **Update the Web Scraping Script:**
