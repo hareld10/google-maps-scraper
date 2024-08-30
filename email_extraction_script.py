@@ -1,3 +1,4 @@
+import json
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -7,15 +8,18 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from selenium.common.exceptions import NoSuchElementException
 
-# Function to extract email addresses from a webpage's content
 def find_email_in_text(text):
-    # Regex pattern to match most email addresses
+    '''
+    Regex pattern to match most email addresses
+    '''
     email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
     emails = re.findall(email_pattern, text)
     return emails[0] if emails else None
 
-# Function to check and extract email from /contact page
 def check_contact_page(driver, base_url):
+    '''
+    Check contant page to see if there are any emails
+    '''
     contact_url = f"{base_url}/contact"
     driver.get(contact_url)
     time.sleep(3)
@@ -28,8 +32,10 @@ def check_contact_page(driver, base_url):
     except NoSuchElementException:
         return None
 
-# Function to process each website
 def process_website(website):
+    '''
+    Initiate Selenium Webdriver
+    '''
     options = Options()
     options.add_argument('--headless=new')
     driver = webdriver.Chrome(options=options)
@@ -67,7 +73,13 @@ def process_website(website):
     finally:
         driver.quit()
 
-df = pd.read_excel('london_catering.xlsx')
+# Load configuration
+with open('config.json', 'r') as config_file:
+    config = json.load(config_file)
+
+excel_file = config['excel_file']
+
+df = pd.read_excel(excel_file)
 
 with ThreadPoolExecutor(max_workers=5) as executor:
     future_to_website = {executor.submit(process_website, row['Website']): index for index, row in df.iterrows() if not pd.isna(row['Website'])}
@@ -87,6 +99,7 @@ with ThreadPoolExecutor(max_workers=5) as executor:
             print(f"Error processing {website}: {e}")
 
 # Save the updated Excel file
-df.to_excel('london_catering_2.xlsx', index=False)
+updated_file = excel_file.replace('.xlsx', '_updated.xlsx')
+df.to_excel(updated_file, index=False)
 
-print("Script completed. All websites have been checked and the Excel file is updated.")
+print(f"Script completed. All websites have been checked and the Excel file is updated: {updated_file}")
