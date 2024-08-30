@@ -7,12 +7,6 @@ This repository contains two Python scripts designed to scrape business data fro
 1. **Web Scraping Script:** `web_scraping_script.py` scrapes business data from Google Maps based on a specified service and location and saves this data to an Excel file.
 2. **Email Extraction Script:** `email_extraction_script.py` reads the generated Excel file, visits each business website, and extracts email addresses, saving the results to a new Excel file.
 
-## Prerequisites
-
-- Python 3.x
-- Google Chrome (or any compatible browser)
-- ChromeDriver (for Selenium)
-
 ## Installation
 
 1. **Clone the repository:**
