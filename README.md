@@ -53,7 +53,7 @@ This repository contains two Python scripts designed to scrape business data fro
 
     This script will generate an Excel file named `location_service.xlsx` and a `config.json` file containing the name of the generated Excel file.
 
-    After that, the script will call `email_extraction_script.py` script.
+    After that, the script itself will call `email_extraction_script.py`.
 
     This script will read the Excel file specified in `config.json`, extract emails from each business website, and save the results to a new Excel file with `_updated` appended to the original filename.
 
