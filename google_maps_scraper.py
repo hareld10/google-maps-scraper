@@ -45,7 +45,7 @@ print("Waiting for the sidebar to load...")
 divSideBar = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, f"div[aria-label*='{service.lower()} {location.lower()}']")))
 
 # Scroll through the results
-print("Scrolling through the results...")
+print("Scrolling the sidebar to load all of the results...")
 previous_scroll_height = driver.execute_script("return arguments[0].scrollHeight", divSideBar)
 while True:
     driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", divSideBar)
