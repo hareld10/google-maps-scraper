@@ -4,7 +4,7 @@ This repository contains two Python scripts designed to scrape business data fro
 
 ## Overview
 
-1. **Web Scraping Script:** `web_scraping_script.py` scrapes business data from Google Maps based on a specified service and location and saves this data to an Excel file.
+1. **Web Scraping Script:** `google_maps_scraper.py` scrapes business data from Google Maps based on a specified service and location and saves this data to an Excel file.
 2. **Email Extraction Script:** `email_extraction_script.py` reads the generated Excel file, visits each business website, and extracts email addresses, saving the results to a new Excel file.
 
 ## Installation
@@ -36,7 +36,7 @@ This repository contains two Python scripts designed to scrape business data fro
 
 1. **Update the Web Scraping Script:**
 
-    Open `web_scraping_script.py` and modify the following variables:
+    Open `google_maps_scraper.py` and modify the following variables:
 
     ```python
     service = "ENTER SERVICE OR PLACE"  # e.g. catering, events, etc. OR starbucks, mcdonalds, etc.
@@ -48,18 +48,12 @@ This repository contains two Python scripts designed to scrape business data fro
     Execute the script with:
 
     ```bash
-    python web_scraping_script.py
+    python google_maps_scraper.py
     ```
 
     This script will generate an Excel file named `location_service.xlsx` and a `config.json` file containing the name of the generated Excel file.
 
-3. **Run the Email Extraction Script:**
-
-    After running the web scraping script, execute the email extraction script:
-
-    ```bash
-    python email_extraction_script.py
-    ```
+    After that, the script will call `email_extraction_script.py` script.
 
     This script will read the Excel file specified in `config.json`, extract emails from each business website, and save the results to a new Excel file with `_updated` appended to the original filename.
 
