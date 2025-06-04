@@ -13,25 +13,27 @@ import json
 
 # Setup and initial configurations
 URL = "https://www.google.com/maps"
-service = "ENTER A SERVICE OR A NAME"  # e.g. catering, events, etc. OR starbucks, mcdonalds, etc.
-location = "ENTER LOCATION"  # e.g. London, Germany, etc.
+service = "resturants"  # e.g. catering, events, etc. OR starbucks, mcdonalds, etc.
+location = "Patong Beach"  # e.g. London, Germany, etc.
 
 print("Starting the web scraping script...")
 
 options = Options()
-options.add_argument('--headless=new')
+#options.add_argument('--headless=new')
+options.add_argument("--lang=en") 
 driver = webdriver.Chrome(options=options)
+
 print(f"Accessing URL: {URL}")
 driver.get(URL)
 
 # Accept cookies
-try:
-    print("Looking for accept cookies button...")
-    accept_cookies = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div/div/div[2]/div[1]/div[3]/div[1]/div[1]/form[2]/div/div/button')))
-    accept_cookies.click()
-    print("Accepted cookies.")
-except NoSuchElementException:
-    print("No accept cookies button found.")
+# try:
+#     print("Looking for accept cookies button...")
+#     accept_cookies = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div/div/div[2]/div[1]/div[3]/div[1]/div[1]/form[2]/div/div/button')))
+#     accept_cookies.click()
+#     print("Accepted cookies.")
+# except NoSuchElementException:
+#     print("No accept cookies button found.")
 
 # Search for results
 print(f"Searching for: {service} in {location}")
@@ -47,13 +49,16 @@ divSideBar = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_
 # Scroll through the results
 print("Scrolling the sidebar to load all of the results...")
 previous_scroll_height = driver.execute_script("return arguments[0].scrollHeight", divSideBar)
-while True:
+
+# limit the number of scrolls to 10
+for i in range(5):
     driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", divSideBar)
     time.sleep(3)
     new_scroll_height = driver.execute_script("return arguments[0].scrollHeight", divSideBar)
     if new_scroll_height == previous_scroll_height:
         break
     previous_scroll_height = new_scroll_height
+
 print("Finished scrolling.")
 
 # Parse the page source
@@ -68,7 +73,7 @@ boxes = soup.find_all('div', class_='Nv2PK')
 print("Collecting data...")
 data = []
 
-for box in boxes:
+for box in boxes[:10]:
     # Business name
     try:
         business_name = box.find('div', class_='qBF1Pd').getText()
@@ -84,7 +89,7 @@ for box in boxes:
 
     # Stars
     try:
-        stars = box.find('span', class_='MW4etd').getText()
+        stars = box.find('span', class_='c').getText()
     except AttributeError:
         stars = "N/A"
 
